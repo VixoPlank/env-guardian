@@ -42,9 +42,16 @@ export default function HomePage() {
             size="lg"
             variant="outline"
             className="text-base px-8 py-6 border-gray-500/50 bg-gray-900/30 text-gray-200 hover:text-white hover:bg-gray-800/60 hover:border-gray-400"
+            asChild
           >
-            <Github className="w-5 h-5" />
-            Ver en GitHub
+            <a
+              href="https://github.com/VixoPlank/env-guardian"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Github className="w-5 h-5" />
+              Ver en GitHub
+            </a>
           </Button>
         </div>
       </div>
