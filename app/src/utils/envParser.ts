@@ -159,45 +159,18 @@ export function generateEmptyEnv(content: string): string {
   const lines = content.split("\n");
   const result: string[] = [];
 
-  let currentComment = "";
-  let currentType: ValidationType | undefined;
-  let currentOptional = false;
-
   for (const line of lines) {
     const trimmedLine = line.trim();
 
     // Preservar líneas vacías
     if (!trimmedLine) {
       result.push("");
-      currentComment = "";
-      currentType = undefined;
-      currentOptional = false;
       continue;
     }
 
     // Preservar comentarios
     if (trimmedLine.startsWith("#")) {
       result.push(line); // Mantener la línea original con espacios
-      const comment = trimmedLine.substring(1).trim();
-
-      // Detectar tipo: # @type string
-      const typeMatch = comment.match(
-        /@type\s+(string|number|boolean|url|email|json)/i
-      );
-      if (typeMatch) {
-        currentType = typeMatch[1].toLowerCase() as ValidationType;
-      }
-
-      // Detectar opcional: # @optional
-      if (comment.match(/@optional/i)) {
-        currentOptional = true;
-      }
-
-      // Guardar comentario regular
-      if (!typeMatch && !comment.match(/@optional/i)) {
-        currentComment = comment;
-      }
-
       continue;
     }
 
@@ -213,11 +186,6 @@ export function generateEmptyEnv(content: string): string {
       } else {
         result.push(`${key}=`);
       }
-
-      // Reset para la siguiente variable
-      currentComment = "";
-      currentType = undefined;
-      currentOptional = false;
     } else {
       // Si no es una variable, preservar la línea tal cual
       result.push(line);
